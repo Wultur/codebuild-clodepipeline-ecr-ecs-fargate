@@ -8,16 +8,18 @@ phases:
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 203065707461.dkr.ecr.us-east-1.amazonaws.com
       - APACHE_URI=203065707461.dkr.ecr.us-east-1.amazonaws.com/apache
       - NGINX_URI=203065707461.dkr.ecr.us-east-1.amazonaws.com/nginx
+      - IMAGE_TAG=latest
   build:
     commands:
       - echo Building the Docker image...
-      - docker build -t $APACHE_URI:latest ./apache
-      - docker build -t $NGINX_URI:latest ./nginx
+      - docker build -t $APACHE_URI:$IMAGE_TAG ./apache
+      - docker build -t $NGINX_URI:$IMAGE_TAG ./nginx
   post_build:
     commands:
       - echo Pushing the Docker images...
-      - docker push $APACHE_URI:latest
-      - docker push $NGINX_URI:latest
+      - docker push $APACHE_URI:$IMAGE_TAG
+      - docker push $NGINX_URI:$IMAGE_TAG
+      - echo Writing image definitions file...
+      - printf '[{"name":"web-apache","imageUri":"%s"}, {"name":"web-nginx","imageUri":"%s"}]' $APACHE_URI:$IMAGE_TAG $NGINX_URI:$IMAGE_TAG > imagedefinitions.json
 artifacts:
-  files:
-    - '**/*'
+    files: imagedefinitions.json
