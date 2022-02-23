@@ -8,6 +8,7 @@ phases:
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 203065707461.dkr.ecr.us-east-1.amazonaws.com
       - APACHE_URI=203065707461.dkr.ecr.us-east-1.amazonaws.com/apache
       - NGINX_URI=203065707461.dkr.ecr.us-east-1.amazonaws.com/nginx
+      - echo $CODEBUILD_BUILD_ID
       - IMAGE_TAG=latest
   build:
     commands:
