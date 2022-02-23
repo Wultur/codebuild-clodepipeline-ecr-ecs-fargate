@@ -20,6 +20,6 @@ phases:
       - docker push $APACHE_URI:$IMAGE_TAG
       - docker push $NGINX_URI:$IMAGE_TAG
       - echo Writing image definitions file...
-      - printf '[{"name":"web-apache","imageUri":"%s"}, {"name":"web-nginx","imageUri":"%s"}]' $APACHE_URI:$IMAGE_TAG $NGINX_URI:$IMAGE_TAG > imagedefinitions.json
+      - printf '[{"name":"web-php","imageUri":"php:7.4-fpm-alpine"}, {"name":"web-apache","imageUri":"%s"}, {"name":"web-nginx","imageUri":"%s"}]' $APACHE_URI:$IMAGE_TAG $NGINX_URI:$IMAGE_TAG > imagedefinitions.json
 artifacts:
     files: imagedefinitions.json
