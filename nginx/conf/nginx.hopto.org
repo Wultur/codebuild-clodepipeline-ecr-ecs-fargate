@@ -26,7 +26,7 @@ server {
     }
 
     location = /onliner {
-        proxy_pass http://google.com/;
+        proxy_pass http://onliner.by/;
     }
 
     location = /image1 {
